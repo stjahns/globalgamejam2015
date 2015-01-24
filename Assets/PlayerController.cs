@@ -27,12 +27,19 @@ public class PlayerController : StateMachineBase {
     public Rigidbody2D DeadBody;
     private DistanceJoint2D bodyJoint;
 
-
     private float IntendedRotation;
 
     void Start () {
         currentState = initialState;
         Velocity = Vector2.zero;
+
+        DialogBox.OnDialogShow += () => {
+            currentState = State.InDialog;
+        };
+
+        DialogBox.OnDialogHide += () => {
+            currentState = State.Walking;
+        };
     }
 
 

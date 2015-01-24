@@ -121,6 +121,10 @@ Prefab:
       propertyPath: onEnter.Array.data[0]
       value: 
       objectReference: {fileID: 753329091}
+    - target: {fileID: 11492158, guid: 5d46f5f66cc5846a785324af1e14c555, type: 2}
+      propertyPath: debug
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5d46f5f66cc5846a785324af1e14c555, type: 2}
   m_RootGameObject: {fileID: 753329087}
@@ -523,7 +527,7 @@ MonoBehaviour:
   onExit: []
   onStay: []
   triggerEnabled: 1
-  debug: 1
+  debug: 0
   color: {r: .213235319, g: .316328526, b: 1, a: 0}
   tags: []
 --- !u!4 &753329090
