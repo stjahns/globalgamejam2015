@@ -75,7 +75,6 @@ public class PlayerController : StateMachineBase {
         UpdateMovement();
 
         if (Input.GetKeyDown(KeyCode.Space)) {
-
             // Stop dragging body
             Destroy(bodyJoint);
             bodyJoint = null;
