@@ -42,6 +42,12 @@ public class PlayerController : StateMachineBase {
         };
     }
 
+    void UpdateCamera() {
+        var position = Camera.main.transform.position;
+        position.x = transform.position.x;
+        position.y = transform.position.y;
+        Camera.main.transform.position = position;
+    }
 
     //
     // Handle character movement from input
@@ -144,5 +150,6 @@ public class PlayerController : StateMachineBase {
 
     override protected void Update () {
         base.Update();
+        UpdateCamera();
     }
 }
