@@ -11,7 +11,7 @@ GameObject:
   - 212: {fileID: 21220182}
   - 61: {fileID: 6120204}
   - 61: {fileID: 6120206}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cubicle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 420174}
   - 212: {fileID: 21220184}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: glasstable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 420176}
   - 61: {fileID: 6120198}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Desk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 420178}
   - 212: {fileID: 21220186}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Computer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 420180}
   - 212: {fileID: 21220188}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: chairA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 420182}
   - 212: {fileID: 21220190}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: chairA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 420184}
   - 212: {fileID: 21220192}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Computer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,7 +123,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 420186}
   - 61: {fileID: 6120200}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Desk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 420188}
   - 212: {fileID: 21220194}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: glasstable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,7 +155,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 420190}
   - 212: {fileID: 21220196}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: glasstable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,7 +171,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 420192}
   - 61: {fileID: 6120202}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Desk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -187,7 +187,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 420194}
   - 212: {fileID: 21220198}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Computer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -203,7 +203,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 420196}
   - 212: {fileID: 21220200}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: chairA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -219,7 +219,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 420198}
   - 212: {fileID: 21220202}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: chairA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -235,7 +235,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 420200}
   - 212: {fileID: 21220204}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Computer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -251,7 +251,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 420202}
   - 61: {fileID: 6120196}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Desk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -267,7 +267,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 420204}
   - 212: {fileID: 21220206}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: glasstable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -282,7 +282,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 420206}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CubicleGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -512,7 +512,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 120206}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -2.28999996, y: -5.26000023, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 420176}
