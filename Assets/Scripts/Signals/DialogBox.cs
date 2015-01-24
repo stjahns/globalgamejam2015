@@ -4,270 +4,270 @@ using System.Collections.Generic;
 
 public class DialogBox : TriggerBase
 {
-	public enum DialogState
-	{
-		Hidden,
-		Unhiding,
-		Typing,
-		Showing
-	};
+  public enum DialogState
+  {
+    Hidden,
+    Unhiding,
+    Typing,
+    Showing
+  };
 
-	public DialogState state = DialogState.Hidden;
+  public DialogState state = DialogState.Hidden;
 
-	public string speaker;
-	public string dialogText;
+  public string speaker;
+  public string dialogText;
 
-	public float wrapMargin;
-	
-	public bool showOnStart = false;
-	public float showDelay = 1.0f;
+  public float wrapMargin;
 
-	public float fontToScreenWidthRatio = 20.0f;
+  public bool showOnStart = false;
+  public float showDelay = 1.0f;
 
-	public float letterTime = 0.2f;
-	public float showTime = 5.0f;
+  public float fontToScreenWidthRatio = 20.0f;
 
-	public GUIText textObject;
-	public GUITexture backgroundObject;
+  public float letterTime = 0.2f;
+  public float showTime = 5.0f;
 
-	public static DialogBox currentDialog = null;
+  public GUIText textObject;
+  public GUITexture backgroundObject;
 
-	public AudioClip typeSound;
-	public AudioClip skipSound;
+  public static DialogBox currentDialog = null;
 
-	[Range(0, 1)]
-	public float typeVolume;
+  public AudioClip typeSound;
+  public AudioClip skipSound;
 
-	[OutputEventConnections]
-	[HideInInspector]
-	public List<SignalConnection> onShow = new List<SignalConnection>();
+  [Range(0, 1)]
+  public float typeVolume;
 
-	[OutputEventConnections]
-	[HideInInspector]
-	public List<SignalConnection> onHide = new List<SignalConnection>();
+  [OutputEventConnections]
+  [HideInInspector]
+  public List<SignalConnection> onShow = new List<SignalConnection>();
 
-	private int letterIndex;
-	private float letterTimer;
+  [OutputEventConnections]
+  [HideInInspector]
+  public List<SignalConnection> onHide = new List<SignalConnection>();
 
-	private float delayTimer;
+  private int letterIndex;
+  private float letterTimer;
 
-	private string prefix;
-	private string wrappedText;
+  private float delayTimer;
 
-	void Start ()
-	{
+  private string prefix;
+  private string wrappedText;
 
-		prefix = "";
-		if (speaker.Length > 0)
-		{
-			prefix = speaker + ": ";
-		}
+  void Start ()
+  {
 
-		textObject.enabled = false;
-		backgroundObject.enabled = false;
+    prefix = "";
+    if (speaker.Length > 0)
+    {
+      prefix = speaker + ": ";
+    }
 
-		// move gui elements to center... kinda hacky...
-		Vector3 position = transform.position;
-		transform.position = Vector3.zero;
-		textObject.transform.parent = null;
-		backgroundObject.transform.parent = null;
-		transform.position = position;
+    textObject.enabled = false;
+    backgroundObject.enabled = false;
 
-		delayTimer = 0.0f;
+    // move gui elements to center... kinda hacky...
+    Vector3 position = transform.position;
+    transform.position = Vector3.zero;
+    textObject.transform.parent = null;
+    backgroundObject.transform.parent = null;
+    transform.position = position;
 
-		if (showOnStart)
-		{
-			Show();
-		}
-	}
+    delayTimer = 0.0f;
 
-	[InputSocket]
-	public void Show()
-	{
-		// TODO might actually want to be able to delay showing when fired from event...
-		Show(false);
-	}
+    if (showOnStart)
+    {
+      Show();
+    }
+  }
 
-	public void Show(bool suppressEvents)
-	{
-		textObject.fontSize = (int) (Screen.width / fontToScreenWidthRatio);
+  [InputSocket]
+  public void Show()
+  {
+    // TODO might actually want to be able to delay showing when fired from event...
+    Show(false);
+  }
 
-		if (currentDialog)
-		{
-			currentDialog.Hide(true);
-		}
+  public void Show(bool suppressEvents)
+  {
+    textObject.fontSize = (int) (Screen.width / fontToScreenWidthRatio);
 
-		currentDialog = this;
+    if (currentDialog)
+    {
+      currentDialog.Hide(true);
+    }
 
-		if (!suppressEvents)
-		{
-			onShow.ForEach(s => s.Fire());
-		}
+    currentDialog = this;
 
-		wrappedText = GetWrappedText(prefix + dialogText);
-		textObject.text = wrappedText.Substring(0, prefix.Length);
-		
-		delayTimer = 0.0f;
-		letterTimer = 0.0f;
-		letterIndex = prefix.Length;
+    if (!suppressEvents)
+    {
+      onShow.ForEach(s => s.Fire());
+    }
 
-		state = DialogState.Unhiding;
-	}
+    wrappedText = GetWrappedText(prefix + dialogText);
+    textObject.text = wrappedText.Substring(0, prefix.Length);
 
-	[InputSocket]
-	public void Hide()
-	{
-		Hide(false);
-	}
+    delayTimer = 0.0f;
+    letterTimer = 0.0f;
+    letterIndex = prefix.Length;
 
-	public void Hide(bool suppressEvents)
-	{
-		currentDialog = null;
+    state = DialogState.Unhiding;
+  }
 
-		if (!suppressEvents)
-		{
-			onHide.ForEach(s => s.Fire());
-		}
+  [InputSocket]
+  public void Hide()
+  {
+    Hide(false);
+  }
 
-		textObject.enabled = false;
-		backgroundObject.enabled = false;
-		state = DialogState.Hidden;
-	}
-	
-	void Update ()
-	{
-		// TODO need to adjust size according to viewport size, if a threshold is exceeded, use
-		// a fixed size for the box
+  public void Hide(bool suppressEvents)
+  {
+    currentDialog = null;
 
-		textObject.fontSize = (int) (Screen.width / fontToScreenWidthRatio);
+    if (!suppressEvents)
+    {
+      onHide.ForEach(s => s.Fire());
+    }
 
-		delayTimer += Time.deltaTime;
+    textObject.enabled = false;
+    backgroundObject.enabled = false;
+    state = DialogState.Hidden;
+  }
 
-		if (state == DialogState.Hidden)
-		{
-			// DO NOTHING 
-		}
-		else if (state == DialogState.Unhiding)
-		{
-			// enable visual elements and start typing after delay
-			if (delayTimer > showDelay)
-			{
-				textObject.enabled = true;
-				backgroundObject.enabled = true;
-				state = DialogState.Typing;
-			}
-		}
-		else if (state == DialogState.Typing)
-		{
-			if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
-			{
-				// Skip typing, fully reveal
-				if (skipSound)
-				{
-					//audio.PlayOneShot(skipSound, typeVolume);
-					AudioSource3D.PlayClipOmnipresent(typeSound, typeVolume);
-				}
+  void Update ()
+  {
+    // TODO need to adjust size according to viewport size, if a threshold is exceeded, use
+    // a fixed size for the box
 
-				state = DialogState.Showing;
-				delayTimer = 0.0f;
-			}
-			else
-			{
-				// Reveal letters one by one
-				letterTimer += Time.deltaTime;
-				if (letterTimer > letterTime)
-				{
-					if (letterIndex < wrappedText.Length)
-					{
-						if (typeSound)
-						{
-							//audio.PlayOneShot(typeSound, typeVolume);
-							AudioSource3D.PlayClipOmnipresent(typeSound, typeVolume);
-						}
-					}
-					else
-					{
-						// Fully revealed, go to Showing state
-						state = DialogState.Showing;
-						letterIndex--;
-						delayTimer = 0.0f;
-					}
+    textObject.fontSize = (int) (Screen.width / fontToScreenWidthRatio);
 
-					letterIndex++;
-					letterTimer = 0;
-				}
-			}
+    delayTimer += Time.deltaTime;
 
-			textObject.text = wrappedText.Substring(0, letterIndex);
-		}
-		else if (state == DialogState.Showing)
-		{
-			textObject.text = wrappedText;
+    if (state == DialogState.Hidden)
+    {
+      // DO NOTHING
+    }
+    else if (state == DialogState.Unhiding)
+    {
+      // enable visual elements and start typing after delay
+      if (delayTimer > showDelay)
+      {
+        textObject.enabled = true;
+        backgroundObject.enabled = true;
+        state = DialogState.Typing;
+      }
+    }
+    else if (state == DialogState.Typing)
+    {
+      if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+      {
+        // Skip typing, fully reveal
+        if (skipSound)
+        {
+          //audio.PlayOneShot(skipSound, typeVolume);
+          //AudioSource3D.PlayClipOmnipresent(typeSound, typeVolume);
+        }
 
-			// Hide if enter hit or if nonzero showtime expires
-			if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)
-					|| (showTime > 0 && delayTimer > showTime))
-			{
-				audio.PlayOneShot(skipSound, typeVolume);
-				Hide();
-			}
-		}
-	}
+        state = DialogState.Showing;
+        delayTimer = 0.0f;
+      }
+      else
+      {
+        // Reveal letters one by one
+        letterTimer += Time.deltaTime;
+        if (letterTimer > letterTime)
+        {
+          if (letterIndex < wrappedText.Length)
+          {
+            if (typeSound)
+            {
+              //audio.PlayOneShot(typeSound, typeVolume);
+              //AudioSource3D.PlayClipOmnipresent(typeSound, typeVolume);
+            }
+          }
+          else
+          {
+            // Fully revealed, go to Showing state
+            state = DialogState.Showing;
+            letterIndex--;
+            delayTimer = 0.0f;
+          }
 
-	//
-	// With the given string, return a new string with appropriate newlines to 
-	// nicely wrap the text in the box
-	//
-	string GetWrappedText(string text)
-	{
-		float textWidth = Screen.width + backgroundObject.pixelInset.width - wrapMargin;
+          letterIndex++;
+          letterTimer = 0;
+        }
+      }
 
-		string[] words = text.Split(' ');
-		string finalText = "";
+      textObject.text = wrappedText.Substring(0, letterIndex);
+    }
+    else if (state == DialogState.Showing)
+    {
+      textObject.text = wrappedText;
 
-		GUIStyle style = new GUIStyle();
-		style.font = textObject.guiText.font;
-		style.fontSize = textObject.guiText.fontSize;
-		style.fontStyle = textObject.guiText.fontStyle;
+      // Hide if enter hit or if nonzero showtime expires
+      if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)
+          || (showTime > 0 && delayTimer > showTime))
+      {
+        audio.PlayOneShot(skipSound, typeVolume);
+        Hide();
+      }
+    }
+  }
 
-		float minWidth;
-		float maxWidth;
+  //
+  // With the given string, return a new string with appropriate newlines to
+  // nicely wrap the text in the box
+  //
+  string GetWrappedText(string text)
+  {
+    float textWidth = Screen.width + backgroundObject.pixelInset.width - wrapMargin;
 
-		int i = 0;
-		for (int j = 0; j < words.Length; ++j)
-		{
-			// when from words from i to j exceed box width,
-			// add i to j-1 with newline to final string
+    string[] words = text.Split(' ');
+    string finalText = "";
 
-			string line = "";
-			for (int word = i; word <= j; word++)
-			{
-				line += words[word] + " ";
-			}
+    GUIStyle style = new GUIStyle();
+    style.font = textObject.guiText.font;
+    style.fontSize = textObject.guiText.fontSize;
+    style.fontStyle = textObject.guiText.fontStyle;
 
-			style.CalcMinMaxWidth(new GUIContent(line), out minWidth, out maxWidth);
+    float minWidth;
+    float maxWidth;
 
-			// TODO what if single word too wide for box?
+    int i = 0;
+    for (int j = 0; j < words.Length; ++j)
+    {
+      // when from words from i to j exceed box width,
+      // add i to j-1 with newline to final string
 
-			if (maxWidth > textWidth)
-			{
-				for (int word = i; word < j; word++)
-				{
-					finalText += words[word] + " ";
-				}
+      string line = "";
+      for (int word = i; word <= j; word++)
+      {
+        line += words[word] + " ";
+      }
 
-				finalText += "\n";
+      style.CalcMinMaxWidth(new GUIContent(line), out minWidth, out maxWidth);
 
-				i = j;
-			}
-		}
+      // TODO what if single word too wide for box?
 
-		// Add remaining words on last line
-		for (int word = i; word < words.Length; word++)
-		{
-			finalText += words[word] + " ";
-		}
+      if (maxWidth > textWidth)
+      {
+        for (int word = i; word < j; word++)
+        {
+          finalText += words[word] + " ";
+        }
 
-		return finalText;
-	}
+        finalText += "\n";
+
+        i = j;
+      }
+    }
+
+    // Add remaining words on last line
+    for (int word = i; word < words.Length; word++)
+    {
+      finalText += words[word] + " ";
+    }
+
+    return finalText;
+  }
 }
