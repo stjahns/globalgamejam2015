@@ -12,7 +12,12 @@ public class PlayerController : StateMachineBase {
 
     public State initialState;
 
-    public float MoveSpeed = 1.0f;
+    public float MoveSpeed = 0.0f;
+    public float MaxMoveSpeed = 1.0f;
+    public float Acceleration = 1.0f;
+    public Vector2 Velocity;
+
+
     public float DragDistance = 1.0f;
     public float DragReachDistance = 1.0f;
 
@@ -23,6 +28,7 @@ public class PlayerController : StateMachineBase {
 
     void Start () {
         currentState = initialState;
+        Velocity = Vector2.zero;
     }
 
     //
@@ -47,15 +53,26 @@ public class PlayerController : StateMachineBase {
 
         movement.Normalize();
 
-        transform.position = transform.position + (movement * MoveSpeed * Time.deltaTime).XY0();
-
-        // TODO better
         if (movement.magnitude > 0f) {
-            PlayerAnimator.SetFloat("MoveSpeed", 1.0f);
+            MoveSpeed += Acceleration * Time.deltaTime;
         } else {
-            PlayerAnimator.SetFloat("MoveSpeed", 0.0f);
+            MoveSpeed -= Acceleration * Time.deltaTime;
         }
 
+        MoveSpeed = Mathf.Clamp(MoveSpeed, 0, MaxMoveSpeed);
+
+        var moveDirection = Velocity.normalized;
+        if (movement.magnitude > 0) {
+            moveDirection = movement;
+        } else {
+            moveDirection = Velocity.normalized;
+        }
+
+        Velocity = moveDirection * MoveSpeed;
+
+        transform.position = transform.position.XY() + (Velocity * Time.deltaTime);
+
+        PlayerAnimator.SetFloat("MoveSpeed", MoveSpeed);
     }
 
     void Walking_Update() {
