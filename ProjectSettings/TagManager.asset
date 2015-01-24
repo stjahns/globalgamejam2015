@@ -55,3 +55,7 @@ TagManager:
     userID: 1
     uniqueID: 3923334697
     locked: 0
+  - name: DialogCharacters
+    userID: 4
+    uniqueID: 2469836695
+    locked: 0

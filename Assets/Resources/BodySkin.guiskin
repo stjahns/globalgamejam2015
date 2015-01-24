@@ -1253,7 +1253,7 @@ MonoBehaviour:
     m_StretchHeight: 0
   - m_Name: DialogBox
     m_Normal:
-      m_Background: {fileID: 2800000, guid: 6235af4ba519c4d008a5418c0302d334, type: 3}
+      m_Background: {fileID: 2800000, guid: 8e2fd9352960a45d58f8b7fe9643e3fa, type: 3}
       m_TextColor: {r: 0, g: 0, b: 0, a: 1}
     m_Hover:
       m_Background: {fileID: 0}
