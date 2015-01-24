@@ -146,6 +146,7 @@ MonoBehaviour:
   MoveSpeed: 1
   DragDistance: .200000003
   DragReachDistance: .5
+  PlayerAnimator: {fileID: 9572314}
   DeadBody: {fileID: 0}
 --- !u!212 &21233040
 SpriteRenderer:

@@ -16,6 +16,8 @@ public class PlayerController : StateMachineBase {
     public float DragDistance = 1.0f;
     public float DragReachDistance = 1.0f;
 
+    public Animator PlayerAnimator;
+
     public Rigidbody2D DeadBody;
     private DistanceJoint2D bodyJoint;
 
@@ -46,6 +48,14 @@ public class PlayerController : StateMachineBase {
         movement.Normalize();
 
         transform.position = transform.position + (movement * MoveSpeed * Time.deltaTime).XY0();
+
+        // TODO better
+        if (movement.magnitude > 0f) {
+            PlayerAnimator.SetFloat("MoveSpeed", 1.0f);
+        } else {
+            PlayerAnimator.SetFloat("MoveSpeed", 0.0f);
+        }
+
     }
 
     void Walking_Update() {
