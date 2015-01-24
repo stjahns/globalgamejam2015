@@ -15,6 +15,7 @@ public class PlayerController : StateMachineBase {
     public float MoveSpeed = 0.0f;
     public float MaxMoveSpeed = 1.0f;
     public float Acceleration = 1.0f;
+    public float TurnSpeed = 0.3f;
     public Vector2 Velocity;
 
 
@@ -26,10 +27,14 @@ public class PlayerController : StateMachineBase {
     public Rigidbody2D DeadBody;
     private DistanceJoint2D bodyJoint;
 
+
+    private float IntendedRotation;
+
     void Start () {
         currentState = initialState;
         Velocity = Vector2.zero;
     }
+
 
     //
     // Handle character movement from input
@@ -62,11 +67,15 @@ public class PlayerController : StateMachineBase {
         MoveSpeed = Mathf.Clamp(MoveSpeed, 0, MaxMoveSpeed);
 
         var moveDirection = Velocity.normalized;
+
         if (movement.magnitude > 0) {
             moveDirection = movement;
+            IntendedRotation = Quaternion.FromToRotation(Vector2.up, moveDirection).eulerAngles.z;
         } else {
             moveDirection = Velocity.normalized;
         }
+
+        transform.eulerAngles = new Vector3(0, 0, Mathf.LerpAngle(transform.eulerAngles.z, IntendedRotation, TurnSpeed));
 
         Velocity = moveDirection * MoveSpeed;
 
