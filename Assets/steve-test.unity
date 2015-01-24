@@ -2091,6 +2091,82 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 34
+--- !u!1 &424435170
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 424435172}
+  - 114: {fileID: 424435171}
+  - 114: {fileID: 424435173}
+  m_Layer: 0
+  m_Name: BossDialog
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &424435171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 424435170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e12c20df64f54e8e86582844a0a194a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  speaker: BOSS
+  dialogText: "There\u2019s no delicate way to put it but our company has a future."
+  showOnStart: 1
+  showDelay: 1
+  letterTime: 0
+  showTime: 5
+  typeSound: {fileID: 0}
+  skipSound: {fileID: 0}
+  typeVolume: 0
+  onShow: []
+  onHide:
+  - {fileID: 424435173}
+  Responses: []
+  onResponseA: []
+  onResponseB: []
+  onResponseC: []
+  skin: {fileID: 0}
+  ResponseIndex: 0
+  CharacterPortrait: {fileID: 1505628020}
+  ArrowTexture: {fileID: 0}
+  style: 0
+--- !u!4 &424435172
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 424435170}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -23.2000008, y: 14.6000004, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 43
+--- !u!114 &424435173
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 424435170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bab1588e3db1493488adbf7d13f50fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1159238439}
+  message: Show
+  argument: 
 --- !u!1 &426299581
 GameObject:
   m_ObjectHideFlags: 0
@@ -2957,6 +3033,76 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_Size: {x: .689999998, y: 1.21000004}
   m_Center: {x: 0, y: .100000001}
+--- !u!1 &607489940
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 607489941}
+  - 33: {fileID: 607489943}
+  - 23: {fileID: 607489942}
+  - 114: {fileID: 607489944}
+  m_Layer: 11
+  m_Name: BlackBackground
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &607489941
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 607489940}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 5}
+  m_LocalScale: {x: 100, y: 100, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1515995132}
+  m_RootOrder: 0
+--- !u!23 &607489942
+Renderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 607489940}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: 3dd25b0067033481b8d9a41380d93373, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!33 &607489943
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 607489940}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &607489944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 607489940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb4ccec6094234f59bed462a9103bf06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FadeTime: 1
+  initialState: 0
 --- !u!1 &623627344
 GameObject:
   m_ObjectHideFlags: 0
@@ -5670,6 +5816,83 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 30
+--- !u!1 &1159238439
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1159238442}
+  - 114: {fileID: 1159238441}
+  - 114: {fileID: 1159238440}
+  m_Layer: 0
+  m_Name: BossDialog2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1159238440
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1159238439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bab1588e3db1493488adbf7d13f50fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 2078093442}
+  message: Show
+  argument: 
+--- !u!114 &1159238441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1159238439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e12c20df64f54e8e86582844a0a194a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  speaker: BOSS
+  dialogText: "However, you\u2019re not apart of it. Pack your things and security
+    will escort you-"
+  showOnStart: 0
+  showDelay: 0
+  letterTime: 0
+  showTime: 5
+  typeSound: {fileID: 0}
+  skipSound: {fileID: 0}
+  typeVolume: 0
+  onShow: []
+  onHide:
+  - {fileID: 1159238440}
+  Responses: []
+  onResponseA: []
+  onResponseB: []
+  onResponseC: []
+  skin: {fileID: 0}
+  ResponseIndex: 0
+  CharacterPortrait: {fileID: 1505628020}
+  ArrowTexture: {fileID: 0}
+  style: 0
+--- !u!4 &1159238442
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1159238439}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -22.2000008, y: 7.9000001, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 44
 --- !u!1 &1166944714
 GameObject:
   m_ObjectHideFlags: 0
@@ -7321,7 +7544,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.1500001, y: 2.70000005, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 607489941}
   m_Father: {fileID: 0}
   m_RootOrder: 1
 --- !u!1 &1520312357
@@ -9586,6 +9810,82 @@ Prefab:
   m_RootGameObject: {fileID: 1147228031}
   m_IsPrefabParent: 0
   m_IsExploded: 1
+--- !u!1 &2078093442
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 2078093445}
+  - 114: {fileID: 2078093444}
+  - 114: {fileID: 2078093443}
+  m_Layer: 0
+  m_Name: BossDialog3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2078093443
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2078093442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bab1588e3db1493488adbf7d13f50fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 607489940}
+  message: FadeFromBlack
+  argument: 
+--- !u!114 &2078093444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2078093442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e12c20df64f54e8e86582844a0a194a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  speaker: BOSS
+  dialogText: "What are you doing\u2026 Wait-STOP-"
+  showOnStart: 0
+  showDelay: 0
+  letterTime: 0
+  showTime: 5
+  typeSound: {fileID: 0}
+  skipSound: {fileID: 0}
+  typeVolume: 0
+  onShow: []
+  onHide:
+  - {fileID: 2078093443}
+  Responses: []
+  onResponseA: []
+  onResponseB: []
+  onResponseC: []
+  skin: {fileID: 0}
+  ResponseIndex: 0
+  CharacterPortrait: {fileID: 1505628020}
+  ArrowTexture: {fileID: 0}
+  style: 0
+--- !u!4 &2078093445
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2078093442}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -25.2999992, y: 2.79999995, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 45
 --- !u!1 &2087813017
 GameObject:
   m_ObjectHideFlags: 0

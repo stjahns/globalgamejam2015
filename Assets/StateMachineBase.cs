@@ -3,7 +3,7 @@ using System.Collections;
 using System.Reflection;
 using System;
 
-public class StateMachineBase : MonoBehaviour
+public class StateMachineBase : TriggerBase
 {
 
   public Action DoUpdate = DoNothing;

@@ -203,9 +203,6 @@ public class DialogBox : TriggerBase
 
         state = DialogState.Unhiding;
 
-        if (CharacterPortrait != null)
-            CharacterPortrait.enabled = true;
-
         if (OnDialogShow != null)
         {
             OnDialogShow();
@@ -270,6 +267,9 @@ public class DialogBox : TriggerBase
             // show and start typing after delay
             if (delayTimer > showDelay)
             {
+                if (CharacterPortrait != null)
+                    CharacterPortrait.enabled = true;
+
                 state = DialogState.Typing;
             }
         }
