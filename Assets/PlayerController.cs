@@ -22,6 +22,7 @@ public class PlayerController : StateMachineBase {
     public float DragDistance = 1.0f;
     public float DragReachDistance = 1.0f;
 
+    public CircleCollider2D circleCollider;
     public Animator PlayerAnimator;
 
     public Rigidbody2D DeadBody;
@@ -92,11 +93,23 @@ public class PlayerController : StateMachineBase {
 
         Velocity = moveDirection * MoveSpeed;
 
-        transform.position = transform.position.XY() + (Velocity * Time.deltaTime);
+        var newPosition = transform.position.XY() + (Velocity * Time.deltaTime);
 
-        PlayerAnimator.SetFloat("MoveSpeed", MoveSpeed);
+        if (!CheckCollision(newPosition)) {
+            transform.position = newPosition;
+            PlayerAnimator.SetFloat("MoveSpeed", MoveSpeed);
+        }
+        else
+        {
+            // Issue - can't 'slide' against walls
+            PlayerAnimator.SetFloat("MoveSpeed", 0);
+        }
     }
 
+
+    bool CheckCollision(Vector2 position) {
+        return Physics2D.CircleCast(position, circleCollider.radius, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Level"));
+    }
 
     void GrabBody() {
 
