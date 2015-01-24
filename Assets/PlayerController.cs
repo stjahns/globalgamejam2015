@@ -84,20 +84,35 @@ public class PlayerController : StateMachineBase {
         PlayerAnimator.SetFloat("MoveSpeed", MoveSpeed);
     }
 
+
+    void GrabBody() {
+
+        var hit = Physics2D.Linecast(transform.position, DeadBody.transform.position, LayerMask.GetMask("Body"));
+        var distanceToBody = (transform.position.XY() - hit.point).magnitude;
+
+        if (distanceToBody < DragReachDistance)
+        {
+            currentState = State.Dragging;
+            bodyJoint = gameObject.AddComponent<DistanceJoint2D>() as DistanceJoint2D;
+            bodyJoint.connectedBody = DeadBody;
+            bodyJoint.distance = DragDistance;
+            bodyJoint.connectedAnchor = hit.point - DeadBody.transform.position.XY();
+            bodyJoint.maxDistanceOnly = true;
+        }
+    }
+
+    void DropBody() {
+        // Stop dragging body
+        Destroy(bodyJoint);
+        bodyJoint = null;
+        currentState = State.Walking;
+    }
+
+
     void Walking_Update() {
         UpdateMovement();
         if (Input.GetKeyDown(KeyCode.Space)) {
-
-            var distanceToBody = (transform.position - DeadBody.transform.position).magnitude;
-
-            if (distanceToBody < DragReachDistance)
-            {
-                currentState = State.Dragging;
-                bodyJoint = gameObject.AddComponent<DistanceJoint2D>() as DistanceJoint2D;
-                bodyJoint.connectedBody = DeadBody;
-                bodyJoint.distance = DragDistance;
-                bodyJoint.maxDistanceOnly = true;
-            }
+            GrabBody();
         }
     }
 
@@ -111,10 +126,7 @@ public class PlayerController : StateMachineBase {
         UpdateMovement();
 
         if (Input.GetKeyDown(KeyCode.Space)) {
-            // Stop dragging body
-            Destroy(bodyJoint);
-            bodyJoint = null;
-            currentState = State.Walking;
+            DropBody();
         }
     }
 
