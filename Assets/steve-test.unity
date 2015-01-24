@@ -169,6 +169,14 @@ Prefab:
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11468444, guid: 497dc70122bba4fca863296ffb02f3db, type: 2}
+      propertyPath: deadBody
+      value: 
+      objectReference: {fileID: 879020965}
+    - target: {fileID: 11468444, guid: 497dc70122bba4fca863296ffb02f3db, type: 2}
+      propertyPath: DeadBody
+      value: 
+      objectReference: {fileID: 879020969}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 497dc70122bba4fca863296ffb02f3db, type: 2}
   m_RootGameObject: {fileID: 237773164}
@@ -240,7 +248,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86b235798ddef444ba0a72e72961d2c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialState: 0
   MoveSpeed: 1
+  DeadBody: {fileID: 879020969}
 --- !u!61 &237773168
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -507,6 +517,7 @@ GameObject:
   - 212: {fileID: 879020966}
   - 50: {fileID: 879020969}
   - 61: {fileID: 879020968}
+  - 114: {fileID: 879020970}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -577,6 +588,17 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+--- !u!114 &879020970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 879020965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98ee4328f6214a189afe7b8082aac15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &887359226
 Prefab:
   m_ObjectHideFlags: 0
