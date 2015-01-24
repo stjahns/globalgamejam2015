@@ -39,6 +39,20 @@ public class DialogBox : TriggerBase
   [HideInInspector]
   public List<SignalConnection> onHide = new List<SignalConnection>();
 
+  public List<string> Responses = new List<string>();
+
+  [OutputEventConnections]
+  [HideInInspector]
+  public List<SignalConnection> onResponseA = new List<SignalConnection>();
+
+  [OutputEventConnections]
+  [HideInInspector]
+  public List<SignalConnection> onResponseB = new List<SignalConnection>();
+
+  [OutputEventConnections]
+  [HideInInspector]
+  public List<SignalConnection> onResponseC = new List<SignalConnection>();
+
   private int letterIndex;
   private float letterTimer;
 
@@ -46,11 +60,13 @@ public class DialogBox : TriggerBase
 
   private string prefix;
 
-  //public GUISkin skin;
+  public GUISkin skin;
   private string fullText;
   private string visibleText;
 
   private float maxHeight = 200;
+
+  public int ResponseIndex = 0;
 
   public enum DialogStyle
   {
@@ -70,6 +86,7 @@ public class DialogBox : TriggerBase
       string containerStyle = "DialogBoxContainer";
       string dialogStyle = "DialogBox";
       string textStyle = "DialogText";
+      string responseStyle = "DialogResponse";
 
       switch (style)
       {
@@ -83,13 +100,29 @@ public class DialogBox : TriggerBase
       float height = Screen.height * 0.5f;
       height = Mathf.Min(height, maxHeight);
 
-      //GUI.skin = skin;
+      GUI.skin = skin;
       GUI.depth = 1;
 
       GUILayout.BeginArea(new Rect(0, Screen.height - height, Screen.width, height));
       GUILayout.BeginVertical(containerStyle);
       GUILayout.BeginVertical(dialogStyle);
+
       GUILayout.Label(visibleText, textStyle);
+
+      for (int i = 0; i < Responses.Count; ++i)
+      {
+          GUILayout.BeginHorizontal();
+
+          if (i == ResponseIndex)
+          {
+              GUILayout.Label(">", responseStyle);
+          }
+
+          GUILayout.Label(Responses[i], responseStyle);
+
+          GUILayout.EndHorizontal();
+      }
+
       GUILayout.EndVertical();
       GUILayout.EndVertical();
       GUILayout.EndArea();
@@ -98,10 +131,10 @@ public class DialogBox : TriggerBase
 
   void Start()
   {
-    //if (skin == null)
-    //{
-      //skin = Resources.Load("ElectricGUI") as GUISkin;
-    //}
+    if (skin == null)
+    {
+      skin = Resources.Load("BodySkin") as GUISkin;
+    }
 
     prefix = "";
     if (speaker.Length > 0)
@@ -168,8 +201,22 @@ public class DialogBox : TriggerBase
     state = DialogState.Hidden;
   }
 
+    void CheckInput()
+    {
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            ResponseIndex = Mathf.Min(Responses.Count - 1, ResponseIndex + 1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            ResponseIndex = Mathf.Max(0, ResponseIndex - 1);
+        }
+    }
+
   void Update()
   {
+      CheckInput();
     // TODO need to adjust size according to viewport size, if a threshold is exceeded, use
     // a fixed size for the box
 
@@ -240,8 +287,40 @@ public class DialogBox : TriggerBase
           || (showTime > 0 && delayTimer > showTime))
       {
         audio.PlayOneShot(skipSound, typeVolume);
+
+        if (Responses.Count > 0)
+        {
+            HandleResponse();
+        }
+
         Hide();
       }
     }
   }
+
+    private void HandleResponse()
+    {
+        List<SignalConnection> responseListeners = null;
+
+        switch (ResponseIndex)
+        {
+            case 0:
+                print("RESPONSE A");
+                responseListeners = onResponseA;
+                break;
+            case 1:
+                print("RESPONSE B");
+                responseListeners = onResponseB;
+                break;
+            case 2:
+                print("RESPONSE C");
+                responseListeners = onResponseC;
+                break;
+        }
+
+        if (responseListeners != null)
+        {
+            responseListeners.ForEach(s => s.Fire());
+        }
+    }
 }
