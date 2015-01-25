@@ -7,7 +7,7 @@ public class BodyController : MonoBehaviour {
 
     public float tearThreshold = 0.4f;
 
-    public List<Rigidbody2D> Parts;
+    public List<Rigidbody2D> Parts = new List<Rigidbody2D>();
 
     public List<HingeJoint2D> Joints;
 
@@ -36,7 +36,16 @@ public class BodyController : MonoBehaviour {
 
             if ((pointA - pointB).magnitude > tearThreshold)
             {
+
+                var newBody = GameObject.Instantiate(Resources.Load<GameObject>("EmptyBodyPrefab"),
+                                                     joint.transform.position,
+                                                     Quaternion.identity) as GameObject;
+
+                newBody.GetComponent<BodyController>().Parts.Add(joint.rigidbody2D);
+
                 Joints.Remove(joint);
+                Parts.Remove(joint.rigidbody2D);
+
                 Destroy(joint);
                 break; // can't enumerate anymore ..
             }

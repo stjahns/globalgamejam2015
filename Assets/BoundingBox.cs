@@ -38,8 +38,15 @@ public class BoundingBox : MonoBehaviour {
 
     void Start()
     {
-        Target = transform.parent;
-        transform.parent = null;
+        if (transform.parent != null)
+        {
+            Target = transform.parent;
+            transform.parent = null;
+        }
+        else
+        {
+            Target = transform;
+        }
     }
 
     void Update()

@@ -25,13 +25,16 @@ public class PlayerController : StateMachineBase {
     public CircleCollider2D circleCollider;
     public Animator PlayerAnimator;
 
-    public BodyController DeadBody;
-    public BoundingBox DeadBodyBoundingBox;
+    //public BodyController DeadBody;
+    //public BoundingBox DeadBodyBoundingBox;
     private DistanceJoint2D bodyJoint;
+
+
 
     private float IntendedRotation;
 
     void Start () {
+
 
         currentState = initialState;
         Velocity = Vector2.zero;
@@ -123,18 +126,36 @@ public class PlayerController : StateMachineBase {
 
     void GrabBody() {
 
-        var hit = Physics2D.Linecast(transform.position, DeadBody.transform.position, LayerMask.GetMask("Body"));
-        var distanceToBody = (transform.position.XY() - hit.point).magnitude;
+        var bodies = GameObject.FindGameObjectsWithTag("BoundingBox");
 
-        if (distanceToBody < DragReachDistance)
+        foreach (var body in bodies)
         {
-            currentState = State.Dragging;
-            bodyJoint = gameObject.AddComponent<DistanceJoint2D>() as DistanceJoint2D;
-            bodyJoint.connectedBody = hit.collider.rigidbody2D;
-            bodyJoint.distance = DragDistance;
-            bodyJoint.connectedAnchor = hit.point - hit.collider.transform.position.XY();
-            bodyJoint.maxDistanceOnly = true;
+            body.GetComponent<BoundingBox>().Hide();
         }
+
+        foreach (var body in bodies)
+        {
+            var distanceToBody = (transform.position - body.transform.position).magnitude;
+
+            if (distanceToBody < DragReachDistance)
+            {
+                var hit = Physics2D.Linecast(transform.position, body.transform.position, LayerMask.GetMask("Body"));
+                body.GetComponent<BoundingBox>().Show();
+
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    currentState = State.Dragging;
+                    bodyJoint = gameObject.AddComponent<DistanceJoint2D>() as DistanceJoint2D;
+                    bodyJoint.connectedBody = hit.collider.rigidbody2D;
+                    bodyJoint.distance = DragDistance;
+                    bodyJoint.connectedAnchor = hit.point - hit.collider.transform.position.XY();
+                    bodyJoint.maxDistanceOnly = true;
+                }
+
+                break;
+            }
+        }
+
     }
 
     void DropBody() {
@@ -147,22 +168,20 @@ public class PlayerController : StateMachineBase {
 
     void Walking_Update() {
         UpdateMovement();
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            GrabBody();
-        }
+        GrabBody();
 
         // Show or hide bounding box ...
-        var hit = Physics2D.Linecast(transform.position, DeadBody.transform.position, LayerMask.GetMask("Body"));
-        var distanceToBody = (transform.position.XY() - hit.point).magnitude;
+        // var hit = Physics2D.Linecast(transform.position, DeadBody.transform.position, LayerMask.GetMask("Body"));
+        // var distanceToBody = (transform.position.XY() - hit.point).magnitude;
 
-        if (distanceToBody < DragReachDistance)
-        {
-            DeadBodyBoundingBox.Show();
-        }
-        else
-        {
-            DeadBodyBoundingBox.Hide();
-        }
+        // if (distanceToBody < DragReachDistance)
+        // {
+        //     //DeadBodyBoundingBox.Show();
+        // }
+        // else
+        // {
+        //     //DeadBodyBoundingBox.Hide();
+        // }
     }
 
     IEnumerator Dialog_EnterState() {
@@ -179,7 +198,7 @@ public class PlayerController : StateMachineBase {
 
         UpdateMovement();
 
-        DeadBodyBoundingBox.Hide();
+        //DeadBodyBoundingBox.Hide();
 
         if (Input.GetKeyDown(KeyCode.Space)) {
             DropBody();
