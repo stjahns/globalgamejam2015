@@ -4,8 +4,10 @@
 TagManager:
   tags:
   - WayPoint
-  - 
+  - Male
   - Body
+  - Female
+  - Wanderer
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
