@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ToolTip: '[SPACE]'
   TooltipOffset: {x: -25.0400009, y: 52.3400002}
-  Showing: 1
+  Showing: 0
   Target: {fileID: 458386}
 --- !u!114 &11450178
 MonoBehaviour:
