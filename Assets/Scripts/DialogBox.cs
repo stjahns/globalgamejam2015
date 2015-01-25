@@ -159,7 +159,6 @@ public class DialogBox : TriggerBase
         {
             ArrowTexture = Resources.Load("triangle") as Texture;
         }
-
         prefix = "";
         if (speaker.Length > 0)
         {
@@ -175,16 +174,13 @@ public class DialogBox : TriggerBase
     }
 
     [InputSocket]
-    public void Show()
+    virtual public void Show()
     {
         // TODO might actually want to be able to delay showing when fired from event...
         Show(false);
     }
 
-    public static event Action OnDialogShow;
-    public static event Action OnDialogHide;
-
-    public void Show(bool suppressEvents)
+    virtual public void Show(bool suppressEvents)
     {
         //textObject.fontSize = (int)(Screen.width / fontToScreenWidthRatio);
 
@@ -209,11 +205,6 @@ public class DialogBox : TriggerBase
         letterIndex = prefix.Length;
 
         state = DialogState.Unhiding;
-
-        if (OnDialogShow != null)
-        {
-            OnDialogShow();
-        }
     }
 
     [InputSocket]
@@ -236,10 +227,6 @@ public class DialogBox : TriggerBase
         if (CharacterPortrait != null)
             CharacterPortrait.enabled = false;
 
-        if (OnDialogHide != null)
-        {
-            OnDialogHide();
-        }
     }
 
     void CheckInput()

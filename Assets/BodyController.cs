@@ -11,6 +11,8 @@ public class BodyController : MonoBehaviour {
 
     public List<HingeJoint2D> Joints;
 
+    public static bool Dismembered = false;
+
     void Start()
     {
         Joints = GetComponentsInChildren<HingeJoint2D>().ToList();
@@ -42,6 +44,8 @@ public class BodyController : MonoBehaviour {
                                                      Quaternion.identity) as GameObject;
 
                 newBody.GetComponent<BodyController>().Parts.Add(joint.rigidbody2D);
+
+                Dismembered = true;
 
                 Joints.Remove(joint);
                 Parts.Remove(joint.rigidbody2D);

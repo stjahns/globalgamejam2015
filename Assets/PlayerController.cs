@@ -37,21 +37,6 @@ public class PlayerController : StateMachineBase {
         currentState = initialState;
         Velocity = Vector2.zero;
 
-        DialogBox.OnDialogShow += () => {
-            currentState = State.InDialog;
-        };
-
-        DialogBox.OnDialogHide += () => {
-            if (bodyJoint == null)
-            {
-                currentState = State.Walking;
-            }
-            else
-            {
-
-                currentState = State.Dragging;
-            }
-        };
     }
 
     void UpdateCamera() {
@@ -207,5 +192,22 @@ public class PlayerController : StateMachineBase {
     override protected void Update () {
         base.Update();
         UpdateCamera();
+
+        if (DialogBox.currentDialog == null)
+        {
+            if (bodyJoint == null)
+            {
+                currentState = State.Walking;
+            }
+            else
+            {
+
+                currentState = State.Dragging;
+            }
+        }
+        else
+        {
+            currentState = State.InDialog;
+        }
     }
 }

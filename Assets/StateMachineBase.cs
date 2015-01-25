@@ -63,48 +63,58 @@ public class StateMachineBase : TriggerBase
     DoOnCollisionEnter2D(collision);
   }
 
-  void ConfigureCurrentState()
-  {
-    if (ExitState != null)
+    void ConfigureCurrentState()
     {
-      StartCoroutine(ExitState());
+        try
+        {
+
+            if (ExitState != null)
+            {
+                StartCoroutine(ExitState());
+            }
+
+            DoUpdate = ConfigureDelegate<Action>("Update", DoNothing);
+            DoOnGUI = ConfigureDelegate<Action>("OnGUI", DoNothing);
+            DoLateUpdate = ConfigureDelegate<Action>("LateUpdate", DoNothing);
+            DoFixedUpdate = ConfigureDelegate<Action>("FixedUpdate", DoNothing);
+
+            DoOnMouseUp = ConfigureDelegate<Action>("OnMouseUp", DoNothing);
+            DoOnMouseDown = ConfigureDelegate<Action>("OnMouseDown", DoNothing);
+            DoOnMouseExit = ConfigureDelegate<Action>("OnMouseExit", DoNothing);
+            DoOnMouseEnter = ConfigureDelegate<Action>("OnMouseEnter", DoNothing);
+            DoOnMouseDrag = ConfigureDelegate<Action>("OnMouseDrag", DoNothing);
+
+            DoOnTriggerEnter = ConfigureDelegate<Action<Collider2D>>
+                ("OnTriggerEnter", DoNothingCollider);
+            DoOnTriggerExit = ConfigureDelegate<Action<Collider2D>>
+                ("OnTriggerExit", DoNothingCollider);
+            DoOnTriggerStay = ConfigureDelegate<Action<Collider2D>>
+                ("OnTriggerStay", DoNothingCollider);
+
+            DoOnCollisionEnter2D = ConfigureDelegate<Action<Collision2D>>
+                ("OnCollisionEnter2D", DoNothingCollision);
+            DoOnCollisionExit = ConfigureDelegate<Action<Collision2D>>
+                ("OnCollisionExit", DoNothingCollision);
+            DoOnCollisionStay = ConfigureDelegate<Action<Collision2D>>
+                ("OnCollisionStay", DoNothingCollision);
+
+            Func<IEnumerator> enterState = ConfigureDelegate<Func<IEnumerator>>
+                ("EnterState", DoNothingCoroutine);
+            ExitState = ConfigureDelegate<Func<IEnumerator>>
+                ("ExitState", DoNothingCoroutine);
+
+            // opt: turn off gui if we don't have an ongui
+            // EnableGUI();
+
+            StartCoroutine(enterState());
+        }
+        catch (Exception e)
+        {
+            print(e.Message);
+            print(e.StackTrace);
+        }
     }
 
-    DoUpdate = ConfigureDelegate<Action>("Update", DoNothing);
-    DoOnGUI = ConfigureDelegate<Action>("OnGUI", DoNothing);
-    DoLateUpdate = ConfigureDelegate<Action>("LateUpdate", DoNothing);
-    DoFixedUpdate = ConfigureDelegate<Action>("FixedUpdate", DoNothing);
-
-    DoOnMouseUp = ConfigureDelegate<Action>("OnMouseUp", DoNothing);
-    DoOnMouseDown = ConfigureDelegate<Action>("OnMouseDown", DoNothing);
-    DoOnMouseExit = ConfigureDelegate<Action>("OnMouseExit", DoNothing);
-    DoOnMouseEnter = ConfigureDelegate<Action>("OnMouseEnter", DoNothing);
-    DoOnMouseDrag = ConfigureDelegate<Action>("OnMouseDrag", DoNothing);
-
-    DoOnTriggerEnter = ConfigureDelegate<Action<Collider2D>>
-      ("OnTriggerEnter", DoNothingCollider);
-    DoOnTriggerExit = ConfigureDelegate<Action<Collider2D>>
-      ("OnTriggerExit", DoNothingCollider);
-    DoOnTriggerStay = ConfigureDelegate<Action<Collider2D>>
-      ("OnTriggerStay", DoNothingCollider);
-
-    DoOnCollisionEnter2D = ConfigureDelegate<Action<Collision2D>>
-      ("OnCollisionEnter2D", DoNothingCollision);
-    DoOnCollisionExit = ConfigureDelegate<Action<Collision2D>>
-      ("OnCollisionExit", DoNothingCollision);
-    DoOnCollisionStay = ConfigureDelegate<Action<Collision2D>>
-      ("OnCollisionStay", DoNothingCollision);
-
-    Func<IEnumerator> enterState = ConfigureDelegate<Func<IEnumerator>>
-      ("EnterState", DoNothingCoroutine);
-    ExitState = ConfigureDelegate<Func<IEnumerator>>
-      ("ExitState", DoNothingCoroutine);
-
-    // opt: turn off gui if we don't have an ongui
-    // EnableGUI();
-
-    StartCoroutine(enterState());
-  }
 
   // Define a generic method that returns a delegate
   T ConfigureDelegate<T>(string methodRoot, T defaultMethod) where T : class

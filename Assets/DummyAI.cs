@@ -36,11 +36,14 @@ public class DummyAI : StateMachineBase {
     void Start () {
         Body = GameObject.FindGameObjectWithTag("Body");
         _animator = GetComponent<Animator>();
+
+        currentState = InitialState;
     }
 
     IEnumerator FollowingWaypoints_EnterState()
     {
         _WaypointCounter = 0;
+        _Speed= 3f;
         _Target= _Waypoints[0].position;
         yield return 0;
     }
