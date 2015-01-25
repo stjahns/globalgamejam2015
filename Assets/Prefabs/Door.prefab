@@ -33,6 +33,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &160546
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 460546}
+  m_Layer: 10
+  m_Name: OpenPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &423340
 Transform:
   m_ObjectHideFlags: 1
@@ -52,12 +67,25 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 123342}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.13000011, y: 1.05999994, z: 0}
+  m_LocalPosition: {x: -5.01999998, y: 1.02999997, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 423340}
+  - {fileID: 460546}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!4 &460546
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 160546}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.44000006, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 423342}
+  m_RootOrder: 1
 --- !u!61 &6123342
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -80,8 +108,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df2db1e2444cf49e695d1737bbfc1108, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OpenAngleDelta: 90
   doorCollider: {fileID: 6123342}
+  OpenPosition: {fileID: 460546}
+  _openPosition: {x: 0, y: 0, z: 0}
+  OpenTime: .25
 --- !u!212 &21223342
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -100,7 +130,7 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayerID: 2172022517
+  m_SortingLayerID: 2872289703
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d14859eaf7b574f75aec5e15c4f215f2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
