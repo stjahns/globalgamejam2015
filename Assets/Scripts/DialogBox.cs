@@ -115,25 +115,29 @@ public class DialogBox : TriggerBase
 
             GUILayout.Label(visibleText, textStyle);
 
-            GUILayout.BeginVertical(responseContainerStyle);
-
-            for (int i = 0; i < Responses.Count; ++i)
+            if (state == DialogState.Showing)
             {
-                GUILayout.BeginHorizontal();
 
-                if (i == ResponseIndex)
+                GUILayout.BeginVertical(responseContainerStyle);
+
+                for (int i = 0; i < Responses.Count; ++i)
                 {
-                    //GUILayout.Label(ArrowTexture, responseStyle);
-                    char rightArrow = '\u25B6';
-                    GUILayout.Label(rightArrow.ToString(), responseStyle);
+                    GUILayout.BeginHorizontal();
+
+                    if (i == ResponseIndex)
+                    {
+                        //GUILayout.Label(ArrowTexture, responseStyle);
+                        char rightArrow = '\u25B6';
+                        GUILayout.Label(rightArrow.ToString(), responseStyle);
+                    }
+
+                    GUILayout.Label(Responses[i], responseStyle);
+
+                    GUILayout.EndHorizontal();
                 }
 
-                GUILayout.Label(Responses[i], responseStyle);
-
-                GUILayout.EndHorizontal();
+                GUILayout.EndVertical();
             }
-
-            GUILayout.EndVertical();
 
             GUILayout.EndVertical();
             GUILayout.EndVertical();
@@ -321,7 +325,7 @@ public class DialogBox : TriggerBase
 
             // Hide if enter hit or if nonzero showtime expires
             if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)
-                || (showTime > 0 && delayTimer > showTime))
+                || (Responses.Count > 0 && showTime > 0 && delayTimer > showTime))
             {
                 audio.PlayOneShot(skipSound, typeVolume);
 

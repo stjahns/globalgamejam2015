@@ -33,7 +33,6 @@ public class BodyController : MonoBehaviour {
         {
             var pointA = joint.transform.position + joint.transform.TransformPoint(joint.anchor);
             var pointB = joint.connectedBody.position.XY0() + joint.connectedBody.transform.TransformPoint(joint.connectedAnchor);
-            print((pointA - pointB).magnitude);
 
             if ((pointA - pointB).magnitude > tearThreshold)
             {
