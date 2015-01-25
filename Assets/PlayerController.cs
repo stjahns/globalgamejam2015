@@ -32,6 +32,7 @@ public class PlayerController : StateMachineBase {
     private float IntendedRotation;
 
     void Start () {
+
         currentState = initialState;
         Velocity = Vector2.zero;
 
@@ -40,7 +41,15 @@ public class PlayerController : StateMachineBase {
         };
 
         DialogBox.OnDialogHide += () => {
-            currentState = State.Walking;
+            if (bodyJoint == null)
+            {
+                currentState = State.Walking;
+            }
+            else
+            {
+
+                currentState = State.Dragging;
+            }
         };
     }
 
@@ -154,6 +163,11 @@ public class PlayerController : StateMachineBase {
         {
             DeadBodyBoundingBox.Hide();
         }
+    }
+
+    IEnumerator Dialog_EnterState() {
+        PlayerAnimator.SetFloat("MoveSpeed", 0);
+        yield return 0;
     }
 
     IEnumerator Dragging_EnterState() {

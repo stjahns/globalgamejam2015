@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class DummyAI : TriggerBase {
-    public float myz;
-    public GameObject ugly;
+
     public Transform[] _Waypoints;
     public int _NumofWaypoints;
     public float _ObjectiveGap;
@@ -12,37 +11,37 @@ public class DummyAI : TriggerBase {
     public float _Speed;
     public Vector3 _Target;
     public float _Distance;
-    public GameObject Body;
     public float POVwidth = 30f;
 
+    private GameObject Body;
     private bool _spottedBody = false;
+
+    private Animator _animator;
 
     [OutputEventConnections]
     [HideInInspector]
     public List<SignalConnection> OnBodySpotted = new List<SignalConnection>();
 
-    // Use this for initialization
     void Start () {
-        Body= GameObject.FindGameObjectWithTag("Body");
+
+        Body = GameObject.FindGameObjectWithTag("Body");
+
         _WaypointCounter= 0;
+
         stop ();
+
         _Target= _Waypoints[0].position;
-        _Distance= Vector3.Distance(transform.position,_Target);
-        //	_Waypoints= new Transform[_NumofWaypoints] ;
-    }
 
-
-    void setz(float SOBADANDWRONG){
-        myz = SOBADANDWRONG;
+        _animator = GetComponent<Animator>();
     }
 
     bool CheckBodySight(){
 
-        var hit = Physics2D.Linecast(transform.position,Body.transform.position, LayerMask.GetMask("Level", "Body"));
+        var hit = Physics2D.Linecast(transform.position, Body.transform.position, LayerMask.GetMask("Level", "Body"));
 
-        Debug.DrawLine(transform.position,Body.transform.position);
+        Debug.DrawLine(transform.position, Body.transform.position);
 
-        if (  Mathf.Abs(Vector3.Angle (transform.position - Body.transform.position, transform.right))< POVwidth && hit.collider.CompareTag("Body")){
+        if ( Mathf.Abs(Vector3.Angle (Body.transform.position - transform.position, transform.up)) < POVwidth && hit.collider.CompareTag("Body")){
 
             return true;
         }
@@ -53,6 +52,9 @@ public class DummyAI : TriggerBase {
 
 
     void Update () {
+
+        _animator.SetFloat("MoveSpeed", _Speed);
+
 
         if (!_spottedBody && CheckBodySight()){
             print("SPOTTED");
@@ -71,9 +73,11 @@ public class DummyAI : TriggerBase {
             }
             _Target= _Waypoints[_WaypointCounter].position;
         }
-        transform.position= Vector3.MoveTowards (transform.position,_Target,1f*_Speed* Time.deltaTime);
-        ugly.SendMessage("gimmie",_Target);
-        transform.eulerAngles= new Vector3 (0f,0f,myz);// transform.eulerAngles(0f,0f, myz);
+
+        transform.position= Vector3.MoveTowards(transform.position, _Target, _Speed * Time.deltaTime);
+
+        var facingRotation = Quaternion.FromToRotation(Vector2.up, _Target - transform.position);
+        transform.rotation = facingRotation;
 
     }
 
@@ -84,7 +88,7 @@ public class DummyAI : TriggerBase {
 
     [InputSocket]
     public void go(){
-        _Speed=5f;
+        _Speed=3f;
     }
 
 

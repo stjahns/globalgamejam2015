@@ -4,7 +4,6 @@ using System.Collections;
 public class ThecoupleAI : MonoBehaviour {
 
   public float myz;
-  public GameObject ugly;
   public bool guy;
   public int timer;
   public int counter;
@@ -66,16 +65,20 @@ public class ThecoupleAI : MonoBehaviour {
 
       }
       transform.position= Vector3.MoveTowards (transform.position,_Target,1f*_Speed* Time.deltaTime);
-      ugly.SendMessage("gimmie",_Target);
-      transform.eulerAngles= new Vector3 (0f,0f,myz);// transform.eulerAngles(0f,0f, myz);
+
+      var facingRotation = Quaternion.FromToRotation(Vector2.up, _Target - transform.position);
+      transform.rotation = facingRotation;
+
     }
     if (undoit){
       counter++;
       if (counter > timer){
 
         transform.position= Vector3.MoveTowards (transform.position,_Target,1f*_Speed* Time.deltaTime);
-        ugly.SendMessage("gimmie",_Target);
-        transform.eulerAngles= new Vector3 (0f,0f,myz);// transform.eulerAngles(0f,0f, myz);
+
+        var facingRotation = Quaternion.FromToRotation(Vector2.up, _Target - transform.position);
+        transform.rotation = facingRotation;
+
         _Distance= Vector3.Distance(transform.position,_Target);
         if (_Distance < _ObjectiveGap){
           if( _WaypointCounter > 0) {
@@ -91,20 +94,6 @@ public class ThecoupleAI : MonoBehaviour {
         }
       }
     }
-
-  /*	_Distance=Vector3.Distance(transform.position,_Target);
-    if (_Distance< _ObjectiveGap){
-      if( _WaypointCounter == _Waypoints.Length - 1){
-        _WaypointCounter=0;
-      }
-      else{
-        _WaypointCounter++;
-      }
-      _Target= _Waypoints[_WaypointCounter].position;
-    }
-    transform.position= Vector3.MoveTowards (transform.position,_Target,1f*_Speed* Time.deltaTime);
-    transform.position= Vector3.MoveTowards (transform.position,_Target,1f*_Speed* Time.deltaTime);
-  }*/
 
   }
 }
