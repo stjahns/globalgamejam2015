@@ -29,8 +29,6 @@ public class PlayerController : StateMachineBase {
     //public BoundingBox DeadBodyBoundingBox;
     private DistanceJoint2D bodyJoint;
 
-
-
     private float IntendedRotation;
 
     void Start () {
@@ -169,19 +167,6 @@ public class PlayerController : StateMachineBase {
     void Walking_Update() {
         UpdateMovement();
         GrabBody();
-
-        // Show or hide bounding box ...
-        // var hit = Physics2D.Linecast(transform.position, DeadBody.transform.position, LayerMask.GetMask("Body"));
-        // var distanceToBody = (transform.position.XY() - hit.point).magnitude;
-
-        // if (distanceToBody < DragReachDistance)
-        // {
-        //     //DeadBodyBoundingBox.Show();
-        // }
-        // else
-        // {
-        //     //DeadBodyBoundingBox.Hide();
-        // }
     }
 
     IEnumerator Dialog_EnterState() {
@@ -191,6 +176,7 @@ public class PlayerController : StateMachineBase {
 
     IEnumerator Dragging_EnterState() {
         print("PICKED UP BODY");
+        PlayerAnimator.SetBool("Dragging", true);
         yield return 0;
     }
 
@@ -198,7 +184,14 @@ public class PlayerController : StateMachineBase {
 
         UpdateMovement();
 
-        //DeadBodyBoundingBox.Hide();
+        var bodies = GameObject.FindGameObjectsWithTag("BoundingBox");
+        foreach (var body in bodies)
+        {
+            body.GetComponent<BoundingBox>().Hide();
+        }
+
+        transform.rotation = Quaternion.FromToRotation(Vector2.up, bodyJoint.connectedBody.position - transform.position.XY());
+        PlayerAnimator.SetBool("Dragging", true);
 
         if (Input.GetKeyDown(KeyCode.Space)) {
             DropBody();
@@ -207,6 +200,7 @@ public class PlayerController : StateMachineBase {
 
     IEnumerator Dragging_ExitState() {
         print("DROPPED BODY");
+        PlayerAnimator.SetBool("Dragging", false);
         yield return 0;
     }
 

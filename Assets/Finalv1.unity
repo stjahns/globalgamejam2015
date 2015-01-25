@@ -8330,7 +8330,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 435990, guid: 497dc70122bba4fca863296ffb02f3db, type: 2}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: DeadBody
