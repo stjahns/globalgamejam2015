@@ -18,7 +18,7 @@ TagManager:
   User Layer 8: Player
   User Layer 9: Body
   User Layer 10: Level
-  User Layer 11: 
+  User Layer 11: Blackout
   User Layer 12: 
   User Layer 13: 
   User Layer 14: 
@@ -55,4 +55,16 @@ TagManager:
   - name: Player
     userID: 1
     uniqueID: 3923334697
+    locked: 0
+  - name: DialogCharacters
+    userID: 4
+    uniqueID: 2469836695
+    locked: 0
+  - name: Tooltips
+    userID: 6
+    uniqueID: 964030357
+    locked: 0
+  - name: Blackout
+    userID: 5
+    uniqueID: 3303149877
     locked: 0

@@ -69,6 +69,10 @@ public class DialogBox : TriggerBase
 
     public int ResponseIndex = 0;
 
+    public UnityEngine.UI.Image CharacterPortrait;
+
+    public Texture ArrowTexture;
+
     public enum DialogStyle
     {
         Normal,
@@ -119,7 +123,9 @@ public class DialogBox : TriggerBase
 
                 if (i == ResponseIndex)
                 {
-                    GUILayout.Label(">", responseStyle);
+                    //GUILayout.Label(ArrowTexture, responseStyle);
+                    char rightArrow = '\u25B6';
+                    GUILayout.Label(rightArrow.ToString(), responseStyle);
                 }
 
                 GUILayout.Label(Responses[i], responseStyle);
@@ -140,6 +146,11 @@ public class DialogBox : TriggerBase
         if (skin == null)
         {
             skin = Resources.Load("BodySkin") as GUISkin;
+        }
+
+        if (ArrowTexture == null)
+        {
+            ArrowTexture = Resources.Load("triangle") as Texture;
         }
 
         prefix = "";
@@ -215,6 +226,9 @@ public class DialogBox : TriggerBase
 
         state = DialogState.Hidden;
 
+        if (CharacterPortrait != null)
+            CharacterPortrait.enabled = false;
+
         if (OnDialogHide != null)
         {
             OnDialogHide();
@@ -253,6 +267,9 @@ public class DialogBox : TriggerBase
             // show and start typing after delay
             if (delayTimer > showDelay)
             {
+                if (CharacterPortrait != null)
+                    CharacterPortrait.enabled = true;
+
                 state = DialogState.Typing;
             }
         }

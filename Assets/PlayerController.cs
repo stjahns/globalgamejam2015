@@ -26,6 +26,7 @@ public class PlayerController : StateMachineBase {
     public Animator PlayerAnimator;
 
     public Rigidbody2D DeadBody;
+    public BoundingBox DeadBodyBoundingBox;
     private DistanceJoint2D bodyJoint;
 
     private float IntendedRotation;
@@ -140,6 +141,19 @@ public class PlayerController : StateMachineBase {
         if (Input.GetKeyDown(KeyCode.Space)) {
             GrabBody();
         }
+
+        // Show or hide bounding box ...
+        var hit = Physics2D.Linecast(transform.position, DeadBody.transform.position, LayerMask.GetMask("Body"));
+        var distanceToBody = (transform.position.XY() - hit.point).magnitude;
+
+        if (distanceToBody < DragReachDistance)
+        {
+            DeadBodyBoundingBox.Show();
+        }
+        else
+        {
+            DeadBodyBoundingBox.Hide();
+        }
     }
 
     IEnumerator Dragging_EnterState() {
@@ -150,6 +164,8 @@ public class PlayerController : StateMachineBase {
     void Dragging_Update() {
 
         UpdateMovement();
+
+        DeadBodyBoundingBox.Hide();
 
         if (Input.GetKeyDown(KeyCode.Space)) {
             DropBody();
