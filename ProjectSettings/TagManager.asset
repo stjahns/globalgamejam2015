@@ -59,6 +59,10 @@ TagManager:
     userID: 4
     uniqueID: 2469836695
     locked: 0
+  - name: Tooltips
+    userID: 6
+    uniqueID: 964030357
+    locked: 0
   - name: Blackout
     userID: 5
     uniqueID: 3303149877
