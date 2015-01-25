@@ -13,12 +13,13 @@ public class DummyAI : StateMachineBase {
     public float _Distance;
     public float POVwidth = 30f;
 
-    private GameObject Body;
+    private GameObject[] Bodies;
     private bool _spottedBody = false;
 
     private Animator _animator;
 
     public bool RepeatWaypoints = false;
+    private float LookDistance;
 
     [OutputEventConnections]
     [HideInInspector]
@@ -34,10 +35,11 @@ public class DummyAI : StateMachineBase {
     public State InitialState;
 
     void Start () {
-        Body = GameObject.FindGameObjectWithTag("Body");
+        Bodies = GameObject.FindGameObjectsWithTag("Body");
         _animator = GetComponent<Animator>();
 
         currentState = InitialState;
+        LookDistance = 10f;
     }
 
     IEnumerator FollowingWaypoints_EnterState()
@@ -50,13 +52,19 @@ public class DummyAI : StateMachineBase {
 
     bool CheckBodySight(){
 
-        var hit = Physics2D.Linecast(transform.position, Body.transform.position, LayerMask.GetMask("Level", "Body"));
+        foreach (var Body in Bodies)
+        {
+            if ((Body.transform.position - transform.position).magnitude > LookDistance)
+                continue;
 
-        Debug.DrawLine(transform.position, Body.transform.position);
+            var hit = Physics2D.Linecast(transform.position, Body.transform.position, LayerMask.GetMask("Level", "Body"));
 
-        if ( Mathf.Abs(Vector3.Angle (Body.transform.position - transform.position, transform.up)) < POVwidth && hit.collider.CompareTag("Body")){
+            Debug.DrawLine(transform.position, Body.transform.position);
 
-            return true;
+            if ( Mathf.Abs(Vector3.Angle (Body.transform.position - transform.position, transform.up)) < POVwidth && hit.collider.CompareTag("Body")){
+
+                return true;
+            }
         }
 
         return false;
