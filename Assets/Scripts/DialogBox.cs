@@ -126,9 +126,12 @@ public class DialogBox : TriggerBase
 
                     if (i == ResponseIndex)
                     {
-                        //GUILayout.Label(ArrowTexture, responseStyle);
                         char rightArrow = '\u25B6';
-                        GUILayout.Label(rightArrow.ToString(), responseStyle);
+                        GUILayout.Label(rightArrow.ToString(), "ResponseArrow");
+                    }
+                    else
+                    {
+                        GUILayout.Label(" ", "ResponseArrow");
                     }
 
                     GUILayout.Label(Responses[i], responseStyle);
@@ -325,9 +328,9 @@ public class DialogBox : TriggerBase
 
             // Hide if enter hit or if nonzero showtime expires
             if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)
-                || (Responses.Count > 0 && showTime > 0 && delayTimer > showTime))
+                || (Responses.Count == 0 && showTime > 0 && delayTimer > showTime))
             {
-                audio.PlayOneShot(skipSound, typeVolume);
+                //audio.PlayOneShot(skipSound, typeVolume);
 
                 Hide();
 
