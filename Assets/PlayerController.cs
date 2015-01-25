@@ -25,7 +25,7 @@ public class PlayerController : StateMachineBase {
     public CircleCollider2D circleCollider;
     public Animator PlayerAnimator;
 
-    public Rigidbody2D DeadBody;
+    public BodyController DeadBody;
     public BoundingBox DeadBodyBoundingBox;
     private DistanceJoint2D bodyJoint;
 
@@ -121,9 +121,9 @@ public class PlayerController : StateMachineBase {
         {
             currentState = State.Dragging;
             bodyJoint = gameObject.AddComponent<DistanceJoint2D>() as DistanceJoint2D;
-            bodyJoint.connectedBody = DeadBody;
+            bodyJoint.connectedBody = hit.collider.rigidbody2D;
             bodyJoint.distance = DragDistance;
-            bodyJoint.connectedAnchor = hit.point - DeadBody.transform.position.XY();
+            bodyJoint.connectedAnchor = hit.point - hit.collider.transform.position.XY();
             bodyJoint.maxDistanceOnly = true;
         }
     }
