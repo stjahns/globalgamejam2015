@@ -154,9 +154,13 @@ public class PlayerController : StateMachineBase {
         GrabBody();
     }
 
-    IEnumerator Dialog_EnterState() {
+    IEnumerator InDialog_EnterState() {
         PlayerAnimator.SetFloat("MoveSpeed", 0);
         yield return 0;
+    }
+
+    void InDialog_Update() {
+        PlayerAnimator.SetFloat("MoveSpeed", 0);
     }
 
     IEnumerator Dragging_EnterState() {

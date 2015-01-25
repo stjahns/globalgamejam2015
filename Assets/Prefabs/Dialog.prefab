@@ -48,6 +48,7 @@ MonoBehaviour:
   showTime: 5
   typeSound: {fileID: 0}
   skipSound: {fileID: 0}
+  selectSound: {fileID: 8300000, guid: 06a63fccea49f4be9b1473db34ae3437, type: 3}
   typeVolume: 0
   onShow: []
   onHide: []

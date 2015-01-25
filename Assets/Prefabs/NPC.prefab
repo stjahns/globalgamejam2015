@@ -212,8 +212,11 @@ MonoBehaviour:
   _Target: {x: 0, y: 0, z: 0}
   _Distance: 0
   POVwidth: 30
+  RepeatWaypoints: 0
+  alertSound: {fileID: 8300000, guid: 888895b889f7341e0861939b9a29b78b, type: 3}
   OnBodySpotted:
   - {fileID: 11415732}
+  InitialState: 0
 --- !u!212 &21270420
 SpriteRenderer:
   m_ObjectHideFlags: 1
