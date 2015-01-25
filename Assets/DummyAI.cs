@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class DummyAI : TriggerBase {
     public float myz;
@@ -12,8 +13,13 @@ public class DummyAI : TriggerBase {
     public Vector3 _Target;
     public float _Distance;
     public GameObject Body;
-    public RaycastHit2D hit;
     public float POVwidth = 30f;
+
+    private bool _spottedBody = false;
+
+    [OutputEventConnections]
+    [HideInInspector]
+    public List<SignalConnection> OnBodySpotted = new List<SignalConnection>();
 
     // Use this for initialization
     void Start () {
@@ -24,15 +30,19 @@ public class DummyAI : TriggerBase {
         _Distance= Vector3.Distance(transform.position,_Target);
         //	_Waypoints= new Transform[_NumofWaypoints] ;
     }
-    void awake(){
 
-    }
+
     void setz(float SOBADANDWRONG){
         myz = SOBADANDWRONG;
     }
-    bool testsight(){
 
-        if (  Mathf.Abs(Vector3.Angle (transform.position - Body.transform.position, transform.right))< POVwidth && hit.collider.CompareTag ("Body")){
+    bool CheckBodySight(){
+
+        var hit = Physics2D.Linecast(transform.position,Body.transform.position, LayerMask.GetMask("Level", "Body"));
+
+        Debug.DrawLine(transform.position,Body.transform.position);
+
+        if (  Mathf.Abs(Vector3.Angle (transform.position - Body.transform.position, transform.right))< POVwidth && hit.collider.CompareTag("Body")){
 
             return true;
         }
@@ -43,14 +53,13 @@ public class DummyAI : TriggerBase {
 
 
     void Update () {
-        hit = Physics2D.Linecast(transform.position,Body.transform.position, 1 << LayerMask.NameToLayer("Body"));
-        Debug.DrawLine(transform.position,Body.transform.position);
 
-
-        if (testsight ()){
-            Debug.Log ("GAMMMMEOVER");                           //THEYSAW THE BODY
+        if (!_spottedBody && CheckBodySight()){
+            print("SPOTTED");
+            _spottedBody = true;
+            stop();
+            OnBodySpotted.ForEach(s => s.Fire());
         }
-
 
         _Distance=Vector3.Distance(transform.position,_Target);
         if (_Distance< _ObjectiveGap){

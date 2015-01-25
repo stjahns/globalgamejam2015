@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Callout : TriggerBase {
 
@@ -15,6 +16,9 @@ public class Callout : TriggerBase {
 
     private float showTimer;
 
+    [OutputEventConnections]
+    [HideInInspector]
+    public List<SignalConnection> OnHide = new List<SignalConnection>();
 
     void OnGUI()
     {
@@ -50,6 +54,7 @@ public class Callout : TriggerBase {
             if (showTimer > ShowTime)
             {
                 Showing = false;
+                OnHide.ForEach(s => s.Fire());
             }
         }
     }

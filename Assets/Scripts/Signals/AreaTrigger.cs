@@ -52,6 +52,13 @@ public class AreaTrigger : TriggerBase
       return;
     }
 
+    if (tags.Count > 0 && !tags.Contains(other.tag))
+    {
+        return;
+    }
+
+
+
 
     Rigidbody2D body = other.attachedRigidbody;
     if (body)
