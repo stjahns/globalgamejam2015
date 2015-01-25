@@ -28,6 +28,7 @@ public class DialogBox : TriggerBase
 
     public AudioClip typeSound;
     public AudioClip skipSound;
+    public AudioClip selectSound;
 
     [Range(0, 1)]
     public float typeVolume;
@@ -234,17 +235,18 @@ public class DialogBox : TriggerBase
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             ResponseIndex = Mathf.Min(Responses.Count - 1, ResponseIndex + 1);
+            AudioSource.PlayClipAtPoint(selectSound, transform.position);
         }
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             ResponseIndex = Mathf.Max(0, ResponseIndex - 1);
+            AudioSource.PlayClipAtPoint(selectSound, transform.position);
         }
     }
 
     void Update()
     {
-        CheckInput();
         // TODO need to adjust size according to viewport size, if a threshold is exceeded, use
         // a fixed size for the box
 
@@ -312,6 +314,7 @@ public class DialogBox : TriggerBase
         else if (state == DialogState.Showing)
         {
             visibleText = fullText;
+            CheckInput();
 
             // Hide if enter hit or if nonzero showtime expires
             if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)

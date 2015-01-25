@@ -21,6 +21,8 @@ public class DummyAI : StateMachineBase {
     public bool RepeatWaypoints = false;
     private float LookDistance;
 
+    public AudioClip alertSound;
+
     [OutputEventConnections]
     [HideInInspector]
     public List<SignalConnection> OnBodySpotted = new List<SignalConnection>();
@@ -109,6 +111,7 @@ public class DummyAI : StateMachineBase {
 
         if (!_spottedBody && CheckBodySight()) {
             _spottedBody = true;
+            AudioSource.PlayClipAtPoint(alertSound, transform.position);
             stop();
             OnBodySpotted.ForEach(s => s.Fire());
         }
