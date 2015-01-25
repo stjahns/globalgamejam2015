@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DummyAI : MonoBehaviour {
+public class DummyAI : TriggerBase {
 	public float myz;
 	public GameObject ugly;
 	public Transform[] _Waypoints;
@@ -19,7 +19,7 @@ public class DummyAI : MonoBehaviour {
 	void Start () {
 		Body= GameObject.FindGameObjectWithTag("Body");
 		_WaypointCounter= 0;
-		go ();
+		stop ();
 		_Target= _Waypoints[0].position;
 		_Distance= Vector3.Distance(transform.position,_Target);
 	//	_Waypoints= new Transform[_NumofWaypoints] ;
@@ -50,8 +50,7 @@ public class DummyAI : MonoBehaviour {
 		if (testsight ()){
 			Debug.Log ("GAMMMMEOVER");                           //THEYSAW THE BODY
 		}
-	//	Debug.Log (hit.collider.name);
-	//	Debug.Log (hit.collider.name);
+
 
 		_Distance=Vector3.Distance(transform.position,_Target);
 		if (_Distance< _ObjectiveGap){
@@ -67,48 +66,17 @@ public class DummyAI : MonoBehaviour {
 		ugly.SendMessage("gimmie",_Target);
 		transform.eulerAngles= new Vector3 (0f,0f,myz);// transform.eulerAngles(0f,0f, myz);
 	
-	
-	//	transform.LookAt (_Target,Vector3.);
-	//	transform.Translate (Vector3.up*_Speed*Time.deltaTime);
-		//transform.position.Set (transform.position.x,transform.position.y, ); 
-
 	}
-	void stop(){
+	[InputSocket]
+	public void stop(){
 		_Speed=0f;
 	}
-	void go(){
-		_Speed=1f;
+	[InputSocket]
+	public void go(){
+		_Speed=5f;
 	}
 
-	/*void TargetUpdate(){
 
-		_Target=  _Waypoints[_WaypointCounter].position;
-	//	_Direction = Vector3.
 
-		if (_Target.y > _ObjectiveGap){
-			_Direction = -Vector2.up;
-			Debug.Log ("4");
-		}
-		else if (_Target.x > _ObjectiveGap){
-			_Direction.y = 0f;
-			Debug.Log ("5");
-		}
-		else {
-			_Direction =  Vector2.up;
-			Debug.Log ("6");
-		}
-		if (_Target.x >_ObjectiveGap){
-			_Direction = -Vector2.right;
-			Debug.Log ("1");
-		}
-		else if (_Target.x > _ObjectiveGap){
-			_Direction.x = 0f;
-			Debug.Log ("2");
-		}
-		else {
-			_Direction =  Vector2.right;
-			Debug.Log ("3");
-		}
-	}
-*/
+
 }
