@@ -2525,7 +2525,7 @@ MonoBehaviour:
   speaker: BOSS
   dialogText: Thank you for bringing me outside. I feel much better now!
   showOnStart: 0
-  showDelay: 0
+  showDelay: 2
   letterTime: 0
   showTime: 5
   typeSound: {fileID: 0}
@@ -5629,7 +5629,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 528415438}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.2399998, y: 3.95000005, z: .00999999978}
+  m_LocalPosition: {x: 14.7799997, y: 3.8900001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -7739,6 +7739,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 743406380}
   - 114: {fileID: 743406379}
+  - 114: {fileID: 743406381}
   m_Layer: 0
   m_Name: WinDialog3
   m_TagString: Untagged
@@ -7769,7 +7770,8 @@ MonoBehaviour:
   skipSound: {fileID: 0}
   typeVolume: 0
   onShow: []
-  onHide: []
+  onHide:
+  - {fileID: 743406381}
   Responses: []
   onResponseA: []
   onResponseB: []
@@ -7786,11 +7788,25 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 743406378}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 26, y: 8.30000019, z: 0}
+  m_LocalPosition: {x: 25.7399998, y: 8.13000011, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 82
+--- !u!114 &743406381
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 743406378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bab1588e3db1493488adbf7d13f50fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1040312483}
+  message: Show
+  argument: 
 --- !u!1 &744537992
 GameObject:
   m_ObjectHideFlags: 0
@@ -10707,6 +10723,80 @@ MonoBehaviour:
   Showing: 0
   ShowTime: 5
   OnHide: []
+--- !u!1 &1040312483
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 1040312487}
+  - 222: {fileID: 1040312486}
+  - 114: {fileID: 1040312485}
+  - 114: {fileID: 1040312484}
+  m_Layer: 5
+  m_Name: FIN
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1040312484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1040312483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3a3ad067d3e43bb9d2d5103532d816, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 1040312485}
+--- !u!114 &1040312485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1040312483}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: d5dc8658b96714d0491811760ff8cb62, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &1040312486
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1040312483}
+--- !u!224 &1040312487
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1040312483}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1201029845}
+  m_RootOrder: 3
+  m_AnchorMin: {x: .5, y: .5}
+  m_AnchorMax: {x: .5, y: .5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: .5, y: .5}
 --- !u!1 &1047809166
 GameObject:
   m_ObjectHideFlags: 0
@@ -12025,6 +12115,7 @@ RectTransform:
   - {fileID: 1505628019}
   - {fileID: 1671982459}
   - {fileID: 624283522}
+  - {fileID: 1040312487}
   m_Father: {fileID: 0}
   m_RootOrder: 42
   m_AnchorMin: {x: 0, y: 0}
