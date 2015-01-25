@@ -115,25 +115,32 @@ public class DialogBox : TriggerBase
 
             GUILayout.Label(visibleText, textStyle);
 
-            GUILayout.BeginVertical(responseContainerStyle);
-
-            for (int i = 0; i < Responses.Count; ++i)
+            if (state == DialogState.Showing)
             {
-                GUILayout.BeginHorizontal();
 
-                if (i == ResponseIndex)
+                GUILayout.BeginVertical(responseContainerStyle);
+
+                for (int i = 0; i < Responses.Count; ++i)
                 {
-                    //GUILayout.Label(ArrowTexture, responseStyle);
-                    char rightArrow = '\u25B6';
-                    GUILayout.Label(rightArrow.ToString(), responseStyle);
+                    GUILayout.BeginHorizontal();
+
+                    if (i == ResponseIndex)
+                    {
+                        char rightArrow = '\u25B6';
+                        GUILayout.Label(rightArrow.ToString(), "ResponseArrow");
+                    }
+                    else
+                    {
+                        GUILayout.Label(" ", "ResponseArrow");
+                    }
+
+                    GUILayout.Label(Responses[i], responseStyle);
+
+                    GUILayout.EndHorizontal();
                 }
 
-                GUILayout.Label(Responses[i], responseStyle);
-
-                GUILayout.EndHorizontal();
+                GUILayout.EndVertical();
             }
-
-            GUILayout.EndVertical();
 
             GUILayout.EndVertical();
             GUILayout.EndVertical();
@@ -152,7 +159,6 @@ public class DialogBox : TriggerBase
         {
             ArrowTexture = Resources.Load("triangle") as Texture;
         }
-
         prefix = "";
         if (speaker.Length > 0)
         {
@@ -168,16 +174,13 @@ public class DialogBox : TriggerBase
     }
 
     [InputSocket]
-    public void Show()
+    virtual public void Show()
     {
         // TODO might actually want to be able to delay showing when fired from event...
         Show(false);
     }
 
-    public static event Action OnDialogShow;
-    public static event Action OnDialogHide;
-
-    public void Show(bool suppressEvents)
+    virtual public void Show(bool suppressEvents)
     {
         //textObject.fontSize = (int)(Screen.width / fontToScreenWidthRatio);
 
@@ -202,11 +205,6 @@ public class DialogBox : TriggerBase
         letterIndex = prefix.Length;
 
         state = DialogState.Unhiding;
-
-        if (OnDialogShow != null)
-        {
-            OnDialogShow();
-        }
     }
 
     [InputSocket]
@@ -229,10 +227,6 @@ public class DialogBox : TriggerBase
         if (CharacterPortrait != null)
             CharacterPortrait.enabled = false;
 
-        if (OnDialogHide != null)
-        {
-            OnDialogHide();
-        }
     }
 
     void CheckInput()
@@ -321,9 +315,9 @@ public class DialogBox : TriggerBase
 
             // Hide if enter hit or if nonzero showtime expires
             if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter)
-                || (showTime > 0 && delayTimer > showTime))
+                || (Responses.Count == 0 && showTime > 0 && delayTimer > showTime))
             {
-                audio.PlayOneShot(skipSound, typeVolume);
+                //audio.PlayOneShot(skipSound, typeVolume);
 
                 Hide();
 

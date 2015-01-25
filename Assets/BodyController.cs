@@ -7,9 +7,11 @@ public class BodyController : MonoBehaviour {
 
     public float tearThreshold = 0.4f;
 
-    public List<Rigidbody2D> Parts;
+    public List<Rigidbody2D> Parts = new List<Rigidbody2D>();
 
     public List<HingeJoint2D> Joints;
+
+    public static bool Dismembered = false;
 
     void Start()
     {
@@ -33,11 +35,21 @@ public class BodyController : MonoBehaviour {
         {
             var pointA = joint.transform.position + joint.transform.TransformPoint(joint.anchor);
             var pointB = joint.connectedBody.position.XY0() + joint.connectedBody.transform.TransformPoint(joint.connectedAnchor);
-            print((pointA - pointB).magnitude);
 
             if ((pointA - pointB).magnitude > tearThreshold)
             {
+
+                var newBody = GameObject.Instantiate(Resources.Load<GameObject>("EmptyBodyPrefab"),
+                                                     joint.transform.position,
+                                                     Quaternion.identity) as GameObject;
+
+                newBody.GetComponent<BodyController>().Parts.Add(joint.rigidbody2D);
+
+                Dismembered = true;
+
                 Joints.Remove(joint);
+                Parts.Remove(joint.rigidbody2D);
+
                 Destroy(joint);
                 break; // can't enumerate anymore ..
             }
